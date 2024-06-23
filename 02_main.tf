@@ -1,14 +1,18 @@
 #READY  
 module "vpc" {
   source = "./aws-modules/vpc"
-  # Subnet public x 3 (a,b,c) 
-  # subnet private n+1 up to 3 (a,b,c)
-  # deploys internet gateway on public subnet
+
   region  = var.region
   cidrs   = var.cidrs
   subnets = var.subnets
 
 }
+
+module "nat" {
+  source = "./aws-modules/nat"
+  vpc_id     = module.vpc.vpc_id
+  depends_on = [module.vpc]
+} 
 /* #READY  
 module "asg" {
   source = "./aws-modules/asg"
