@@ -1,19 +1,16 @@
-resource "aws_mq_broker" "example" {
-  broker_name       = "example"
-  broker_engine     = "ActiveMQ"
-  broker_engine_version = "5.15.14"
-  instance_type     = "mq.t3.micro"
-  security_groups   = [aws_security_group.mq.id]
+resource "aws_mq_broker" "this" {
+  broker_name       = "thebroker"
+  engine_type     = "ActiveMQ"
+  engine_version = "5.15.14"
+  host_instance_type     = "mq.t3.micro"
+  security_groups   = data.aws_security_groups.this.ids
 
   user {
     username = "admin"
-    password = "YourPassword123"
+    password = "best1Password2InTheWhole3World"
   }
 
-  subnet_ids = [
-    aws_subnet.public.id,
-    aws_subnet.private.id,
-  ]
+  subnet_ids = data.aws_subnets.aws_subnets.ids
 
-  publicly_accessible = true
+  publicly_accessible = false
 }

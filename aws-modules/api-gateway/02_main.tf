@@ -1,6 +1,6 @@
 resource "aws_api_gateway_rest_api" "api" {
-  name        = "example-api"
-  description = "API Gateway example"
+  name        = "bca-api"
+  description = "API Gateway - bca"
 }
 
 resource "aws_api_gateway_resource" "write_resource" {
@@ -61,7 +61,7 @@ resource "aws_lambda_permission" "read_permission" {
   function_name = aws_lambda_function.read_lambda.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_api_gateway_rest_api.api.execution_arn}/*/GET/read"
-}
+} 
 
 resource "aws_api_gateway_deployment" "deployment" {
   depends_on = [

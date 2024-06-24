@@ -1,4 +1,4 @@
-variable "region" {
+/* variable "region" {
   type        = string
   default     = "eu-central-1"
   description = "region to deploy the subnetes"
@@ -22,3 +22,4 @@ variable "subnets" {
 }
 
 
+ */
