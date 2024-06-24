@@ -1,6 +1,11 @@
 resource "aws_api_gateway_rest_api" "api" {
   name        = "bca-api"
   description = "API Gateway - bca"
+
+  tags = {
+    Name = "api-gateway"
+    Environment = "dev" 
+  }
 }
 
 resource "aws_api_gateway_resource" "write_resource" {
@@ -35,7 +40,7 @@ resource "aws_api_gateway_integration" "write_integration" {
   http_method             = aws_api_gateway_method.write_method.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.write_lambda.invoke_arn
+  uri                     = var.wlambda_invoke_arn
 }
 
 resource "aws_api_gateway_integration" "read_integration" {
@@ -44,13 +49,13 @@ resource "aws_api_gateway_integration" "read_integration" {
   http_method             = aws_api_gateway_method.read_method.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.read_lambda.invoke_arn
+  uri                     = var.rlambda_invoke_arn
 }
 
 resource "aws_lambda_permission" "write_permission" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.write_lambda.function_name
+  function_name = var.wlambda_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_api_gateway_rest_api.api.execution_arn}/*/POST/write"
 }
@@ -58,7 +63,7 @@ resource "aws_lambda_permission" "write_permission" {
 resource "aws_lambda_permission" "read_permission" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.read_lambda.function_name
+  function_name = var.rlambda_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_api_gateway_rest_api.api.execution_arn}/*/GET/read"
 } 

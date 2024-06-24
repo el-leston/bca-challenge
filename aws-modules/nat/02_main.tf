@@ -1,6 +1,10 @@
 # Elastic IP for NAT Gateway
 resource "aws_eip" "nat" {
   domain = "vpc"
+   tags = {
+    Name = "elastic IP for the NAT"
+    Environment = "dev" 
+  }
 }
 
 resource "aws_nat_gateway" "this" {
@@ -9,6 +13,7 @@ resource "aws_nat_gateway" "this" {
 
   tags = {
     Name = "Public Nat GW"
+    Environment = "dev" 
   }
 
 }
