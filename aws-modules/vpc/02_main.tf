@@ -6,6 +6,7 @@ resource "aws_vpc" "this" {
 
   tags = {
     Name = "VPC"
+    Environment = "dev" 
   }
 }
 
@@ -20,6 +21,7 @@ resource "aws_internet_gateway" "igw" {
 
   tags = {
     Name = "Internet Gateway"
+    Environment = "dev" 
   }
 }
 
@@ -32,6 +34,7 @@ resource "aws_subnet" "this" {
 
   tags = {
     Name = each.value.subnetName != "" ? each.value.subnetName : "subnet-${each.key}"
+    Environment = "dev" 
   }
 
   lifecycle {
@@ -46,6 +49,7 @@ resource "aws_route_table" "public" {
 
   tags = {
     Name = "public-rt"
+    Environment = "dev" 
   }
 }
 
@@ -63,6 +67,7 @@ resource "aws_route_table" "private" {
 
   tags = {
     Name = "private-rt"
+    Environment = "dev" 
   }
 }
 
@@ -118,6 +123,7 @@ resource "aws_default_security_group" "default" {
 
   tags = {
     Name = "default"
+    Environment = "dev" 
   }
 }
 

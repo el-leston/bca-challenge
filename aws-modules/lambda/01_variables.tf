@@ -1,25 +1,5 @@
-/* variable "region" {
+variable "broker_url" {
   type        = string
-  default     = "eu-central-1"
-  description = "region to deploy the subnetes"
+  default     = ""
+  description = "description"
 }
-
-variable "cidrs" {
-  type = object({
-    primary   = string
-    secondary = optional(list(string))
-  })
-  description = "CIDRs of the VPC"
-}
-variable "subnets" {
-  type = map(object({
-    availability_zones = optional(list(string), ["a", "b", "c"])
-    cidr_block         = string
-    IsPrivate          = bool
-    Isroutable         = bool
-    subnetName         = optional(string, "")
-  }))
-}
-
-
- */

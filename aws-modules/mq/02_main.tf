@@ -1,16 +1,21 @@
 resource "aws_mq_broker" "this" {
-  broker_name       = "thebroker"
-  engine_type     = "ActiveMQ"
-  engine_version = "5.15.14"
+  broker_name         = "thebroker"
+  engine_type         = "ActiveMQ"
+  engine_version      = "5.17.6"
   host_instance_type     = "mq.t3.micro"
-  security_groups   = data.aws_security_groups.this.ids
+  security_groups       = [var.mq_sg]
 
   user {
     username = "admin"
     password = "best1Password2InTheWhole3World"
   }
 
-  subnet_ids = data.aws_subnets.aws_subnets.ids
+  subnet_ids = var.private_subnets
 
   publicly_accessible = false
+
+  tags = {
+    Name = "bca-mq"
+    Environment = "dev" 
+  }
 }

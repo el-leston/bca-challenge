@@ -1,3 +1,9 @@
+tags = {
+  Name = "bca-challenge"
+  Environment = "dev" 
+}
+
+
 #### VPC ####
 cidrs = {
   primary   = "172.20.0.0/25"

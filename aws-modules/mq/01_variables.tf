@@ -1,22 +1,9 @@
-variable "region" {
+variable "mq_sg" {
   type        = string
-  default     = "eu-central-1"
-  description = "region to deploy the subnetes"
+  description = "description"
 }
 
-variable "cidrs" {
-  type = object({
-    primary   = string
-    secondary = optional(list(string))
-  })
-  description = "CIDRs of the VPC"
-}
-variable "subnets" {
-  type = map(object({
-    availability_zones = optional(list(string), ["a", "b", "c"])
-    cidr_block         = string
-    IsPrivate          = bool
-    Isroutable         = bool
-    subnetName         = optional(string, "")
-  }))
+variable "private_subnets" {
+  type = list(string)
+  description = "list of subnet ids for mq broker "
 }

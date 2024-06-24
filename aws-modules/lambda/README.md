@@ -26,11 +26,14 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_cidrs"></a> [cidrs](#input\_cidrs) | CIDRs of the VPC | <pre>object({<br>    primary   = string<br>    secondary = optional(list(string))<br>  })</pre> | n/a | yes |
-| <a name="input_region"></a> [region](#input\_region) | region to deploy the subnetes | `string` | `"eu-central-1"` | no |
-| <a name="input_subnets"></a> [subnets](#input\_subnets) | n/a | <pre>map(object({<br>    availability_zones = optional(list(string), ["a", "b", "c"])<br>    cidr_block         = string<br>    IsPrivate          = bool<br>    Isroutable         = bool<br>    subnetName         = optional(string, "")<br>  }))</pre> | n/a | yes |
+| <a name="input_broker_url"></a> [broker\_url](#input\_broker\_url) | description | `string` | `""` | no |
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_rlambda_invoke_arn"></a> [rlambda\_invoke\_arn](#output\_rlambda\_invoke\_arn) | Read Invoke arn |
+| <a name="output_rlambda_name"></a> [rlambda\_name](#output\_rlambda\_name) | Read lambda name |
+| <a name="output_wlambda_invoke_arn"></a> [wlambda\_invoke\_arn](#output\_wlambda\_invoke\_arn) | Write Invoke arn |
+| <a name="output_wlambda_name"></a> [wlambda\_name](#output\_wlambda\_name) | Write lambda name |
 <!-- END_TF_DOCS -->

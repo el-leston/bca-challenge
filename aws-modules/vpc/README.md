@@ -48,6 +48,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_default_sg_id"></a> [default\_sg\_id](#output\_default\_sg\_id) | description |
 | <a name="output_nlb_subnets_ids"></a> [nlb\_subnets\_ids](#output\_nlb\_subnets\_ids) | n/a |
 | <a name="output_private_subnet_ids"></a> [private\_subnet\_ids](#output\_private\_subnet\_ids) | n/a |
 | <a name="output_public_subnet_ids"></a> [public\_subnet\_ids](#output\_public\_subnet\_ids) | n/a |

@@ -21,10 +21,18 @@ variable "subnets" {
   }))
 }
 
+variable tags {
+  type        = map(string)
+  description = "description"
+}
+
+#### ASG ####
 variable "asg_name" {
   type        = string
   description = "the name of the autoscaling group"
 }
+
+#### S3 ####
 variable bucket_name {
   type        = string
   description = "Name of the bucket"
@@ -35,3 +43,24 @@ variable log_bucket_name {
   description = "Name of the log bucket"
 }
 
+
+/* #### API GATEWAY ####
+
+ variable "wlambda_name" {
+   type        = string
+   description = "write lambda name"
+ }
+
+  variable "rlambda_name" {
+   type        = string
+   description = "read lambda name"
+ }
+
+  variable "wlambda_invoke_arn" {
+   type        = string
+   description = "write invoke arn"
+ }
+  variable "rlambda_invoke_arn" {
+   type        = string
+   description = "read invoke arn"
+ } */

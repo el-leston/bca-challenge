@@ -3,12 +3,12 @@ resource "aws_launch_template" "this" {
 
   #TODO CHANGE TO DATASOURCE
   iam_instance_profile {
-    arn = "arn:aws:iam::811931148196:instance-profile/SSM" 
+    arn = var.arn_instance_profile #"arn:aws:iam::811931148196:instance-profile/SSM" 
   }
   # Launch template versioning can be controlled explicitly or defaulted.
   #version = "$Latest"
 
-  vpc_security_group_ids  = [data.aws_security_groups.this.ids[0]]
+  vpc_security_group_ids  = [var.asg_sg]
   # Basic configuration for the launch template
   block_device_mappings {
     device_name = "/dev/xvda"
@@ -47,6 +47,7 @@ resource "aws_launch_template" "this" {
 
     tags = {
       Name = "el-instance"
+      Environment = "dev" 
     }
   }
 
@@ -65,7 +66,7 @@ resource "aws_autoscaling_group" "this" {
     version = aws_launch_template.this.latest_version
   }
 
-  vpc_zone_identifier       = var.subnet_ids 
+  vpc_zone_identifier       = data.aws_subnets.private_subnets.ids
   min_size                  = 0
   max_size                  = 2
   desired_capacity          = 2
@@ -77,31 +78,11 @@ resource "aws_autoscaling_group" "this" {
       value               = var.asg_name
       propagate_at_launch = true
     }
-  
-}
-
-
-
-# Elastic IP for NAT Gateway
-resource "aws_eip" "nat" {
-  domain = "vpc"
-}
-
-resource "aws_nat_gateway" "this" {
-  allocation_id = aws_eip.nat.id
-  subnet_id     = data.aws_subnets.nat_public_subnet.ids[0]
-
-  tags = {
-    Name = "Public Nat GW"
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 50
+    }
+    
   }
-
-}
-
-
-# Create a route to the NAT Gateway in the private route table if is already created in console(to avoid cost)
-
-resource "aws_route" "private" {
-  route_table_id         = data.aws_route_table.private_rt.id
-  destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_nat_gateway.this.id
 }
