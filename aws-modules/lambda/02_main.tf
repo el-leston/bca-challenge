@@ -40,31 +40,34 @@ EOF
 }
 
 resource "aws_lambda_function" "write_lambda" {
-  filename         = "write_lambda.zip"
+  filename         = "write_lambda.zip.b64"
   function_name    = "write_lambda"
   role             = aws_iam_role.lambda_exec_role.arn
   handler          = "write_lambda.handler"
   runtime          = "python3.8"
-  source_code_hash = filebase64sha256("write_lambda.zip")
+  source_code_hash = "${base64sha256(file("/home/eleston/documents/git/bca-challenge/aws-modules/lambda/producer.py"))}"
+  #source_code_hash  = "eu-central-1/dev/bca/zips/write_lambda.zip"
+  #s3_bucket        = "dev-remote-backend-bucket"
+  #s3_key           = "eu-central-1/dev/bca/zips/"
 
-  environment {
+  /* environment {
     variables = {
-      MQ_URL = aws_mq_broker.example.primary_endpoint
+      MQ_URL = var.broker_url #aws_mq_broker.example.primary_endpoint
     }
-  }
+  } */
 }
 
 resource "aws_lambda_function" "read_lambda" {
-  filename         = "read_lambda.zip"
+  filename         = "read_lambda.zip.b64"
   function_name    = "read_lambda"
   role             = aws_iam_role.lambda_exec_role.arn
   handler          = "read_lambda.handler"
   runtime          = "python3.8"
-  source_code_hash = filebase64sha256("read_lambda.zip")
-
-  environment {
+  #source_code_hash = "eu-central-1/dev/bca/zips/read_lambda.zip" #base64sha256("/home/eleston/documents/git/bca-challenge/aws-modules/lambda/read_lambda.zip")
+  source_code_hash = "${base64sha256(file("/home/eleston/documents/git/bca-challenge/aws-modules/lambda/subscriber.py"))}"
+ /*  environment {
     variables = {
-      MQ_URL = aws_mq_broker.example.primary_endpoint
+      MQ_URL = var.broker_url #aws_mq_broker.example.primary_endpoint
     }
-  }
+  } */
 }
